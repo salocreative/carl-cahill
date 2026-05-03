@@ -1,0 +1,964 @@
+/* =============================================================
+   Carl Cahill — portfolio landing page
+   Built from Figma design (1440px reference width)
+   ============================================================= */
+
+:root {
+  --bg: #060606;
+  --fg: #ffffff;
+  --container: 1280px;
+  --pad-x: 64px;
+  --pad-y: 256px;
+  /* Dotted background tile size — referenced by both the CSS bg
+     and the cursor-halo canvas in script.js so the two layers
+     stay perfectly aligned. */
+  --dot-spacing: 28px;
+
+  --fs-eyebrow: 22px;
+  --fs-display: 72px;
+  --fs-heading: 42px;
+  --fs-statement: 142px;
+  --fs-award-title: 18px;
+  --fs-award-source: 10px;
+
+  --tracking: 0.01em;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: "Fustat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--fg);
+  /* Dotted-notebook texture: a single faint dot per 28px tile.
+     Lives on the body so it scrolls with the page like real
+     notebook paper. Sections are transparent so this shows through
+     them. The cursor halo (canvas, fixed) overlays this grid and
+     brightens dots within ~180px of the pointer. */
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.07) 1px,
+    transparent 1.5px
+  );
+  background-size: var(--dot-spacing, 28px) var(--dot-spacing, 28px);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =============================================================
+   Layout primitives
+   ============================================================= */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+}
+
+.section {
+  position: relative;
+  width: 100%;
+  padding: var(--pad-y) 0;
+  /* Transparent so the body's dotted-notebook background shows
+     through. Each section now sits on the same texture, with the
+     cursor halo painting on top of it. */
+  background: transparent;
+}
+
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  line-height: 1;
+}
+
+/* =============================================================
+   Fixed hero background
+   The portrait sits behind everything and fades out as the user
+   scrolls past the banner. Opacity is driven by JS in script.js
+   via the --hero-opacity custom property.
+   ============================================================= */
+.hero-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--hero-opacity, 1);
+  will-change: opacity;
+}
+
+.hero-bg__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =============================================================
+   Cursor-tied dot halo
+   Fixed full-viewport canvas. Painted in script.js — only the
+   ~13×13 dots within `INFLUENCE` of the pointer are redrawn each
+   frame. Sits at the same z-index as the hero, but earlier in DOM
+   order, so the hero portrait covers it at the top of the page;
+   the halo emerges naturally as the hero opacity falls.
+   ============================================================= */
+.dot-cursor {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* =============================================================
+   Banner
+   ============================================================= */
+.banner {
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 720px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.banner__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 64px;
+  width: 100%;
+}
+
+.display {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  line-height: 1;
+}
+
+.awards {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.awards__brand img {
+  height: 30px;
+  width: 103px;
+  flex-shrink: 0;
+}
+
+.award {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.award__bracket {
+  height: 33px;
+  width: 14px;
+  flex-shrink: 0;
+}
+
+.award__bracket--right {
+  transform: scaleX(-1);
+}
+
+.award__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.award__title {
+  font-size: var(--fs-award-title);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  white-space: nowrap;
+}
+
+.award__sub {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.award__source {
+  font-size: var(--fs-award-source);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  white-space: nowrap;
+}
+
+.award__line {
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+  min-width: 12px;
+}
+
+/* =============================================================
+   Quote section
+   ============================================================= */
+.quote-section .container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.quote {
+  display: flex;
+  align-items: stretch;
+  gap: 32px;
+  max-width: 728px;
+}
+
+.quote__rule {
+  flex-shrink: 0;
+  width: 1px;
+  background: currentColor;
+  align-self: stretch;
+}
+
+.quote__text {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  line-height: 1.05;
+}
+
+/* =============================================================
+   SALO callout
+   ============================================================= */
+.salo-callout {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Outlined SALO mark sat behind the callout text. Sized to the
+   section's full height so the watermark feels architectural;
+   width follows the logo's aspect ratio. The SVG is anchored at
+   horizontal centre and translated by JS via `--salo-x` so it
+   sweeps from right → left as the user scrolls past. Opacity lives
+   on the stroke layer only so the purple cursor spotlight stays
+   vivid inside the clipped letter shapes. */
+.salo-callout__bg {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 103.293 / 29.9979;
+  color: var(--fg);
+  pointer-events: none;
+  z-index: 0;
+  transform: translate3d(calc(-50% + var(--salo-x, 0px)), 0, 0);
+  will-change: transform;
+}
+
+.salo-callout__bg-outline {
+  opacity: 0.3;
+}
+
+/* Purple spotlight clipped to SALO silhouette — fades when pointer
+   leaves the section (`is-idle` toggled in script.js). */
+.salo-callout__cursor-layer {
+  transition: opacity 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.salo-callout__cursor-layer.is-idle {
+  opacity: 0;
+}
+
+.salo-callout__row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.salo-callout__logo {
+  height: 30px;
+  width: 103px;
+  flex-shrink: 0;
+}
+
+/* =============================================================
+   Achievements (Great Design / Experiences / Commerce)
+   Each is now its own top-level <section>, so it picks up the
+   shared viewport-tall layout from `main > section`.
+   ============================================================= */
+.achievement {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 64px;
+  width: 100%;
+}
+
+.achievement__row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  min-height: 200px;
+}
+
+/* The fill and stroke titles stack on top of each other in a single
+   grid cell so they line up perfectly. The phone sits between them
+   (z-index 2) so it scrubs across the fill text but is itself
+   covered by the stroke outline above. */
+.achievement__title-stack {
+  position: relative;
+  display: grid;
+}
+
+.achievement__title-stack > .achievement__title {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.achievement__title {
+  font-size: var(--fs-statement);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  line-height: 1;
+  white-space: nowrap;
+  display: block;
+  margin: 0;
+}
+
+.achievement__title--fill {
+  position: relative;
+  z-index: 1;
+}
+
+.achievement__title--stroke {
+  position: relative;
+  z-index: 3;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--fg);
+  pointer-events: none;
+}
+
+.achievement__phone {
+  position: absolute;
+  right: clamp(-80px, -3vw, -20px);
+  top: 50%;
+  z-index: 2;
+  pointer-events: none;
+  transform: translate(var(--phone-x, 0px), -50%);
+  will-change: transform;
+}
+
+/* Phone composite (frame + tilted screen) */
+.phone {
+  position: relative;
+  width: clamp(140px, 18vw, 218px);
+  aspect-ratio: 218 / 443;
+  height: auto;
+}
+
+.phone__screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.phone--tilted {
+  transform: rotate(var(--phone-rotate, 30deg));
+  filter: drop-shadow(-30px 50px 60px rgba(0, 0, 0, 0.8));
+  will-change: transform;
+}
+
+/* =============================================================
+   Logos
+   ============================================================= */
+.logos-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.logos-section__title {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  line-height: 1.05;
+  /* Vertical rhythm only — horizontal alignment comes from the
+     parent .container so this title shares the same left rail
+     as every other text section. */
+  padding: 64px 0;
+  margin: 0 auto;
+  max-width: var(--container);
+  text-align: left;
+}
+
+.logos-section__title u {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 32px var(--pad-x);
+}
+
+.logo {
+  width: 133px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity 200ms ease;
+}
+
+.logo:hover img {
+  opacity: 1;
+}
+
+/* =============================================================
+   Brands showcase (device mockups)
+   ============================================================= */
+.brands-section {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* The brands eyebrow and the marquee strip both ride the standard
+   container rail; no extra inset on top. */
+
+.device-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Each row is the visible viewport for a marquee track. Overflow
+   is hidden here so the track's wider-than-viewport width clips
+   cleanly. */
+.device-strip__row {
+  width: 100%;
+  overflow: hidden;
+  padding: 16px 0;
+}
+
+/* The track holds the actual devices and is what we animate.
+   `width: max-content` lets it grow to fit all the devices side
+   by side; script.js clones the children once so the visible
+   content is doubled, which is what makes the loop seamless. */
+.device-strip__track {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  width: max-content;
+}
+
+.device-strip__row--left.is-marquee .device-strip__track {
+  animation: marquee-left 90s linear infinite;
+}
+
+.device-strip__row--right.is-marquee .device-strip__track {
+  animation: marquee-right 90s linear infinite;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device-strip__row .device-strip__track {
+    animation: none;
+    transform: none;
+  }
+}
+
+.device {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.device--phone {
+  width: clamp(180px, 22vw, 310px);
+  aspect-ratio: 310 / 630;
+  height: auto;
+}
+
+.device--ipad {
+  width: clamp(460px, 57vw, 819px);
+  aspect-ratio: 819 / 630;
+  height: auto;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.device__screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: contain;
+}
+
+/* =============================================================
+   Experience
+   ============================================================= */
+.experience-section .container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.experience {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.experience__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.experience__label {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.experience__rule {
+  flex: 1;
+  height: 1px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.7);
+  min-width: 24px;
+}
+
+.experience__value {
+  font-size: var(--fs-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* =============================================================
+   Partner testimonial video (Vimeo)
+   ============================================================= */
+.testimonial-video-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.testimonial-video-section__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.testimonial-video-section__heading {
+  font-size: var(--fs-heading);
+  font-weight: 700;
+  letter-spacing: var(--tracking);
+  line-height: 1.05;
+  margin: 0;
+}
+
+/* Same horizontal bounds as the rest of the site — fills the
+   content column only (max-width + side padding from .container). */
+.testimonial-video-section__embed {
+  width: 100%;
+}
+
+.testimonial-video-section__frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0a0a0a;
+}
+
+.testimonial-video-section__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.testimonial-video-section__outro {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.testimonial-video-section__link {
+  font-size: var(--fs-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  line-height: 1;
+  opacity: 0.65;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: opacity 200ms ease;
+}
+
+.testimonial-video-section__link:hover,
+.testimonial-video-section__link:focus-visible {
+  opacity: 1;
+}
+
+/* =============================================================
+   Footer
+   ============================================================= */
+.footer {
+  width: 100%;
+  padding: 48px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer__name,
+.footer__copy {
+  font-size: var(--fs-eyebrow);
+  font-weight: 300;
+  letter-spacing: var(--tracking);
+  line-height: 1;
+  margin: 0;
+}
+
+.footer__copy {
+  opacity: 0.5;
+}
+
+.footer__social {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--fg);
+  opacity: 0.7;
+  border-radius: 999px;
+  /* Magnetic translation values are pushed by script.js as the
+     cursor approaches. Falls back to no offset when JS is off. */
+  transform: translate3d(var(--magnet-x, 0), var(--magnet-y, 0), 0);
+  transition: opacity 200ms ease, background-color 200ms ease;
+  will-change: transform;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.footer__link svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* =============================================================
+   Responsive
+   ============================================================= */
+@media (max-width: 1280px) {
+  :root {
+    --fs-display: clamp(40px, 6.5vw, 72px);
+    --fs-statement: clamp(64px, 11vw, 142px);
+    --fs-heading: clamp(28px, 3.5vw, 42px);
+    --pad-x: 32px;
+    --pad-y: 96px;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --pad-x: 32px;
+    --pad-y: 80px;
+  }
+
+  .banner {
+    height: min(800px, 100vh);
+  }
+
+  /* Banner has its own padding rule (not inherited from .container)
+     so it needs an explicit override on mobile. Every other text
+     section already rides .container's --pad-x rail, so they pick
+     up the smaller mobile gutter automatically. */
+  .banner__content {
+    padding: var(--pad-x);
+  }
+
+  .logos-section__title {
+    padding: 48px 0;
+  }
+
+  .achievement {
+    padding: 32px var(--pad-x);
+  }
+
+  .achievement__row {
+    min-height: 280px;
+  }
+
+  .achievement__phone {
+    right: -60px;
+  }
+
+  .awards {
+    gap: 16px;
+  }
+
+
+  .experience__row {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  .experience__label {
+    white-space: normal;
+  }
+
+  .experience__value {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --fs-eyebrow: 16px;
+    --fs-award-title: 14px;
+    /* Statement words ("Great Design" etc.) keep nowrap, so the
+       size has to come down enough to fit the longest word at the
+       narrowest supported viewport (~320px). */
+    --fs-statement: clamp(36px, 10vw, 64px);
+  }
+
+  /* Stack the SALO logo + award badges vertically so each line gets
+     its own row and the brackets/source text don't crowd. */
+  .awards {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Tighter achievement layout: smaller phone, smaller off-screen
+     inset, and a shorter row so the title sits comfortably with the
+     phone scrubbing across it. */
+  .achievement__row {
+    min-height: 180px;
+  }
+
+  .achievement__phone {
+    right: -32px;
+  }
+
+  .phone {
+    width: clamp(80px, 16vw, 120px);
+  }
+
+  .device-strip__row {
+    gap: 16px;
+    padding: 8px 0;
+  }
+
+  /* Brand logos collapse from a fluid wrap into a fixed 4-col grid.
+     Cells are flexible so the logos scale with the viewport instead
+     of jumping at each breakpoint. */
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px 12px;
+    padding: 24px var(--pad-x);
+  }
+
+  .logo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .footer__inner {
+    gap: 16px;
+  }
+}
+
+/* =============================================================
+   Reveal animations
+   Elements with `.reveal` start hidden and fade up when an
+   IntersectionObserver in script.js adds `.is-visible`.
+   ============================================================= */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 32px, 0);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+
+/* -------------------------------------------------------------
+   Title character reveal
+   `.title-reveal` is split into `<span class="char">` elements
+   in script.js. Each char gets a `--char-i` index. They start
+   blurred and faded out, then ease in with a staggered delay
+   when the parent receives `.is-visible`.
+   ----------------------------------------------------------- */
+/* Words wrap as a unit so chars never break mid-word. */
+.title-reveal .word {
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: inherit;
+}
+
+.title-reveal .char {
+  display: inline-block;
+  /* Inherit text-decoration so chars inside <u> still draw the
+     underline (inline-block normally breaks decoration propagation). */
+  text-decoration: inherit;
+  opacity: 0;
+  filter: blur(12px);
+  transform: translate3d(0, 0.15em, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--char-i, 0) * 22ms);
+  will-change: opacity, filter, transform;
+}
+
+.title-reveal.is-visible .char {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    opacity: 1 !important;
+  }
+
+  .salo-callout__cursor-layer {
+    display: none;
+  }
+
+  .reveal,
+  .title-reveal .char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Carl Cahill — Fractional Creative Director &amp; fellow agency founder</title>
+    <meta
+      name="description"
+      content="Carl Cahill — Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fustat:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!-- Cursor-tied dotted halo. The base grid is painted by the
+         body's CSS background; this canvas overlays a brighter,
+         larger dot wherever the pointer goes. Sits behind the hero
+         portrait so it only appears once the hero fades, in sync
+         with the rest of the dotted background. -->
+    <canvas class="dot-cursor" aria-hidden="true"></canvas>
+
+    <!-- Fixed hero background. Lives behind everything, fades out as
+         the user scrolls past the banner. -->
+    <div class="hero-bg" aria-hidden="true">
+      <img
+        class="hero-bg__image"
+        src="assets/images/hero-portrait.png"
+        alt=""
+      />
+    </div>
+
+    <main>
+      <!-- ============================================================
+           Hero / Banner
+           ============================================================ -->
+      <section class="banner" aria-label="Introduction">
+        <div class="banner__content container">
+          <p class="eyebrow reveal">Carl Cahill</p>
+          <h1 class="display title-reveal">
+            Fractional Creative Director<br />
+            and fellow agency founder
+          </h1>
+          <p class="eyebrow reveal">I help agencies scale their creative output</p>
+
+          <ul class="awards reveal" aria-label="Highlights and recognition">
+            <li class="awards__brand">
+              <img src="assets/svg/salo-logo.svg" alt="SALO" />
+            </li>
+            <li class="award">
+              <img class="award__bracket award__bracket--left" src="assets/svg/bracket-left.svg" alt="" />
+              <div class="award__body">
+                <p class="award__title">Creative of the Year</p>
+                <div class="award__sub">
+                  <span class="award__line"></span>
+                  <span class="award__source">Wirehive 100</span>
+                  <span class="award__line"></span>
+                </div>
+              </div>
+              <img class="award__bracket award__bracket--right" src="assets/svg/bracket-right.svg" alt="" />
+            </li>
+            <li class="award">
+              <img class="award__bracket award__bracket--left" src="assets/svg/bracket-left.svg" alt="" />
+              <div class="award__body">
+                <p class="award__title">DADI Award Winner</p>
+                <div class="award__sub">
+                  <span class="award__line"></span>
+                  <span class="award__source">The Drum</span>
+                  <span class="award__line"></span>
+                </div>
+              </div>
+              <img class="award__bracket award__bracket--right" src="assets/svg/bracket-right.svg" alt="" />
+            </li>
+            <li class="award">
+              <img class="award__bracket award__bracket--left" src="assets/svg/bracket-left.svg" alt="" />
+              <div class="award__body">
+                <p class="award__title">No.1 Design Census</p>
+                <div class="award__sub">
+                  <span class="award__line"></span>
+                  <span class="award__source">The Drum</span>
+                  <span class="award__line"></span>
+                </div>
+              </div>
+              <img class="award__bracket award__bracket--right" src="assets/svg/bracket-right.svg" alt="" />
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Quote
+           ============================================================ -->
+      <section class="section quote-section" aria-label="Introduction quote">
+        <div class="container">
+          <p class="eyebrow reveal">Hey, I’m Carl.</p>
+          <figure class="quote reveal">
+            <span class="quote__rule" aria-hidden="true"></span>
+            <blockquote class="quote__text title-reveal">
+              I help brands and agencies optimised their design process and output without sacrificing exceptional creative thinking
+            </blockquote>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           SALO callout
+           ============================================================ -->
+      <section class="section salo-callout" aria-label="About SALO">
+        <!-- Large outlined SALO mark sitting behind the callout text. -->
+        <svg
+          class="salo-callout__bg"
+          viewBox="0 0 103.293 29.9979"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <defs>
+            <!-- Filled silhouette of the SALO mark — same geometry as the
+                 stroke layer, used only to clip the purple cursor glow to
+                 the interior of the letters. -->
+            <clipPath id="salo-callout-shape-clip" clipPathUnits="userSpaceOnUse">
+              <path
+                fill="white"
+                fill-rule="evenodd"
+                d="M101.81 9.07457C98.1301 1.20254 88.766 -2.19512 80.8932 1.48369L80.2047 0.0096821C72.332 3.68849 68.9331 13.0514 72.6125 20.9234C76.2914 28.7954 85.6556 32.1931 93.5283 28.5143L94.2168 29.9874C102.09 26.3086 105.488 16.9457 101.81 9.07367V9.07457ZM90.7804 22.6369C86.1551 24.7982 80.6537 22.8009 78.4923 18.1767C76.3304 13.5516 78.3283 8.0511 82.9527 5.88972L83.6411 7.36197C88.267 5.20065 93.7678 7.19793 95.9297 11.8221C98.0911 16.4473 96.0937 21.9477 91.4689 24.1091L90.7804 22.6369Z"
+              />
+              <path
+                fill="white"
+                fill-rule="evenodd"
+                d="M71.947 29.7408L54.8911 29.7416V29.7408H54.0876L51.7067 24.6349V0.250844H58.197V23.2523H68.9216L71.947 29.7408Z"
+              />
+              <path
+                fill="white"
+                fill-rule="evenodd"
+                d="M35.547 0.24999L31.9671 7.92776L32.6607 9.4142L23.1815 29.739H30.3421L36.2406 17.092L42.1382 29.739H49.2979L49.2997 29.7381L35.547 0.24999Z"
+              />
+              <path
+                fill="white"
+                fill-rule="evenodd"
+                d="M21.8696 20.4143C21.8696 20.4808 21.8696 20.5446 21.8678 20.6094C21.7632 25.6708 17.6271 29.739 12.5411 29.739H0L3.02552 23.2496H5.04873V23.2523H12.7327C13.5159 23.2523 14.2246 22.9348 14.7373 22.4222C15.2509 21.9087 15.5684 21.2001 15.5684 20.4169C15.5684 18.8507 14.2983 17.5815 12.7327 17.5815H12.6387C12.6059 17.5807 12.5739 17.5798 12.5411 17.5798H10.203C8.06362 17.5798 6.10424 16.818 4.59194 15.5319C2.77183 13.9861 1.59924 11.7024 1.53538 9.14456C1.53538 9.10821 1.53094 8.96012 1.53094 8.92107C1.53094 6.5265 2.5013 4.35894 4.07039 2.79004C5.63946 1.22113 7.80728 0.250877 10.2013 0.24999H22.9216L19.8934 6.73935H10.203C10.1906 6.73935 10.1782 6.73935 10.1658 6.74025H10.0398C9.43758 6.74025 8.89115 6.98414 8.49646 7.37967C8.10177 7.77436 7.85693 8.31979 7.85693 8.92287C7.85693 10.1281 8.8344 11.1046 10.0398 11.1046H12.7017C17.7797 11.1897 21.8696 15.3165 21.8696 20.4143Z"
+              />
+            </clipPath>
+
+            <!-- Soft gaussian blur on the purple spotlight (user-space
+                 region oversized so blur doesn’t clip at filter edges). -->
+            <filter
+              id="salo-callout-purple-blur"
+              x="-35"
+              y="-35"
+              width="173"
+              height="100"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4.8" />
+            </filter>
+          </defs>
+
+          <!-- Purple cursor spotlight — clipped to letter interiors. -->
+          <g class="salo-callout__cursor-layer is-idle" clip-path="url(#salo-callout-shape-clip)">
+            <g
+              class="salo-callout__cursor-follow"
+              filter="url(#salo-callout-purple-blur)"
+              transform="translate(51.6465 14.99895)"
+            >
+              <circle
+                class="salo-callout__cursor-glow"
+                cx="0"
+                cy="0"
+                r="18"
+                fill="#6405FF"
+                opacity="0.22"
+              />
+              <circle class="salo-callout__cursor-dot" cx="0" cy="0" r="5" fill="#6405FF" />
+            </g>
+          </g>
+
+          <g class="salo-callout__bg-outline" fill="none" stroke="currentColor" stroke-width="0.1" vector-effect="non-scaling-stroke">
+            <path d="M101.81 9.07457C98.1301 1.20254 88.766 -2.19512 80.8932 1.48369L80.2047 0.0096821C72.332 3.68849 68.9331 13.0514 72.6125 20.9234C76.2914 28.7954 85.6556 32.1931 93.5283 28.5143L94.2168 29.9874C102.09 26.3086 105.488 16.9457 101.81 9.07367V9.07457ZM90.7804 22.6369C86.1551 24.7982 80.6537 22.8009 78.4923 18.1767C76.3304 13.5516 78.3283 8.0511 82.9527 5.88972L83.6411 7.36197C88.267 5.20065 93.7678 7.19793 95.9297 11.8221C98.0911 16.4473 96.0937 21.9477 91.4689 24.1091L90.7804 22.6369Z"/>
+            <path d="M71.947 29.7408L54.8911 29.7416V29.7408H54.0876L51.7067 24.6349V0.250844H58.197V23.2523H68.9216L71.947 29.7408Z"/>
+            <path d="M35.547 0.24999L31.9671 7.92776L32.6607 9.4142L23.1815 29.739H30.3421L36.2406 17.092L42.1382 29.739H49.2979L49.2997 29.7381L35.547 0.24999Z"/>
+            <path d="M21.8696 20.4143C21.8696 20.4808 21.8696 20.5446 21.8678 20.6094C21.7632 25.6708 17.6271 29.739 12.5411 29.739H0L3.02552 23.2496H5.04873V23.2523H12.7327C13.5159 23.2523 14.2246 22.9348 14.7373 22.4222C15.2509 21.9087 15.5684 21.2001 15.5684 20.4169C15.5684 18.8507 14.2983 17.5815 12.7327 17.5815H12.6387C12.6059 17.5807 12.5739 17.5798 12.5411 17.5798H10.203C8.06362 17.5798 6.10424 16.818 4.59194 15.5319C2.77183 13.9861 1.59924 11.7024 1.53538 9.14456C1.53538 9.10821 1.53094 8.96012 1.53094 8.92107C1.53094 6.5265 2.5013 4.35894 4.07039 2.79004C5.63946 1.22113 7.80728 0.250877 10.2013 0.24999H22.9216L19.8934 6.73935H10.203C10.1906 6.73935 10.1782 6.73935 10.1658 6.74025H10.0398C9.43758 6.74025 8.89115 6.98414 8.49646 7.37967C8.10177 7.77436 7.85693 8.31979 7.85693 8.92287C7.85693 10.1281 8.8344 11.1046 10.0398 11.1046H12.7017C17.7797 11.1897 21.8696 15.3165 21.8696 20.4143Z"/>
+          </g>
+        </svg>
+
+        <div class="container salo-callout__row reveal">
+          <p class="eyebrow">I also run a design agency called</p>
+          <img class="salo-callout__logo" src="assets/svg/salo-logo.svg" alt="SALO" />
+          <p class="eyebrow">where we...</p>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Achievements — each is its own top-level section so it gets
+           the same easing/spacing treatment as everything else.
+           ============================================================ -->
+      <section class="section achievement-section" aria-label="Great Design">
+        <div class="achievement container">
+          <p class="eyebrow reveal">Help brands and agencies deliver</p>
+          <div class="achievement__row">
+            <div class="achievement__title-stack">
+              <h2 class="achievement__title achievement__title--fill title-reveal">Great Design</h2>
+              <span class="achievement__title achievement__title--stroke title-reveal" aria-hidden="true">Great Design</span>
+            </div>
+            <div class="achievement__phone" aria-hidden="true">
+              <div class="phone phone--tilted">
+                <img class="phone__screen" src="assets/images/phone-screen-rotated.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section achievement-section" aria-label="Experiences">
+        <div class="achievement container">
+          <p class="eyebrow reveal">Push boundaries with digital</p>
+          <div class="achievement__row">
+            <div class="achievement__title-stack">
+              <h2 class="achievement__title achievement__title--fill title-reveal">Experiences</h2>
+              <span class="achievement__title achievement__title--stroke title-reveal" aria-hidden="true">Experiences</span>
+            </div>
+            <div class="achievement__phone" aria-hidden="true">
+              <div class="phone phone--tilted">
+                <img class="phone__screen" src="assets/images/phone-screen-rotated.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section achievement-section" aria-label="Commerce">
+        <div class="achievement container">
+          <p class="eyebrow reveal">Drive growth for brands in the world of</p>
+          <div class="achievement__row">
+            <div class="achievement__title-stack">
+              <h2 class="achievement__title achievement__title--fill title-reveal">Commerce</h2>
+              <span class="achievement__title achievement__title--stroke title-reveal" aria-hidden="true">Commerce</span>
+            </div>
+            <div class="achievement__phone" aria-hidden="true">
+              <div class="phone phone--tilted">
+                <img class="phone__screen" src="assets/images/phone-screen-rotated.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Logos
+           ============================================================ -->
+      <section class="section logos-section" aria-label="Brands and agencies I have worked with">
+        <div class="container reveal">
+          <h2 class="logos-section__title title-reveal">
+            I have partnered with many <u>brands</u> and <u>agencies</u>
+          </h2>
+        </div>
+        <ul class="logos reveal">
+          <li class="logo"><img src="assets/svg/logo-1.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-2.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-3.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-4.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-5.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-6.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-7.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-8.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-9.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-10.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-11.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-12.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-13.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-14.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-15.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-16-calm.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-17.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-18.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-19.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-20.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-21.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-22.svg" alt="" /></li>
+          <li class="logo"><img src="assets/svg/logo-23.svg" alt="" /></li>
+        </ul>
+      </section>
+
+      <!-- ============================================================
+           Brands showcase (device mockups)
+           ============================================================ -->
+      <section class="section brands-section" aria-label="Brand work">
+        <div class="container">
+          <p class="eyebrow reveal">Showcase</p>
+        </div>
+
+        <div class="device-strip reveal">
+          <!-- Two marquee rows running in opposite directions. The
+               track holds the source devices; script.js clones them
+               at runtime to make the loop seamless. -->
+          <div class="device-strip__row device-strip__row--left">
+            <div class="device-strip__track">
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-1.png" alt="" />
+              </div>
+              <div class="device device--ipad">
+                <img class="device__screen" src="assets/images/ipad-screen-1.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-2.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-3.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-4.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-5.png" alt="" />
+              </div>
+            </div>
+          </div>
+
+          <div class="device-strip__row device-strip__row--right">
+            <div class="device-strip__track">
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-1.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-6.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-3.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-7.png" alt="" />
+              </div>
+              <div class="device device--ipad">
+                <img class="device__screen" src="assets/images/ipad-screen-2.png" alt="" />
+              </div>
+              <div class="device device--phone">
+                <img class="device__screen" src="assets/images/brand-5.png" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Experience
+           ============================================================ -->
+      <section class="section experience-section" aria-label="Experience">
+        <div class="container">
+          <p class="eyebrow reveal">Experience</p>
+          <dl class="experience">
+            <div class="experience__row reveal">
+              <dt class="experience__label">Creative industry experience</dt>
+              <span class="experience__rule" aria-hidden="true"></span>
+              <dd class="experience__value">15 years+</dd>
+            </div>
+            <div class="experience__row reveal">
+              <dt class="experience__label">Leading global agencies</dt>
+              <span class="experience__rule" aria-hidden="true"></span>
+              <dd class="experience__value">Running design teams in the UK &amp; US</dd>
+            </div>
+            <div class="experience__row reveal">
+              <dt class="experience__label">Project &amp; individual awards</dt>
+              <span class="experience__rule" aria-hidden="true"></span>
+              <dd class="experience__value">Creative of the Year</dd>
+            </div>
+            <div class="experience__row reveal">
+              <dt class="experience__label">Recognised in the industry</dt>
+              <span class="experience__rule" aria-hidden="true"></span>
+              <dd class="experience__value">BIMA 100</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           Partner testimonials (Vimeo)
+           Featured embed from https://vimeo.com/salocreative/testimonials ;
+           replace iframe src if Vimeo rotates the privacy hash.
+           ============================================================ -->
+      <section class="section testimonial-video-section" aria-label="Partner agency testimonials">
+        <div class="container testimonial-video-section__inner">
+          <h2 class="testimonial-video-section__heading title-reveal">
+            Hear from our partner agency founders
+          </h2>
+
+          <div class="testimonial-video-section__embed reveal">
+            <div class="testimonial-video-section__frame">
+              <iframe
+                src="https://player.vimeo.com/video/1170350821?h=3dc29a7f08&amp;title=0&amp;byline=0&amp;portrait=0&amp;color=6405ff"
+                title="Video testimonial from partner agency founders"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            </div>
+          </div>
+
+          <div class="testimonial-video-section__outro reveal">
+            <a
+              class="testimonial-video-section__link"
+              href="https://vimeo.com/salocreative/testimonials"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              More testimonials on Vimeo
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============================================================
+         Footer
+         ============================================================ -->
+    <footer class="footer" aria-label="Site footer">
+      <div class="container footer__inner">
+        <p class="footer__name">Carl Cahill</p>
+
+        <ul class="footer__social" aria-label="Social profiles">
+          <li>
+            <a
+              class="footer__link"
+              data-magnetic
+              href="https://www.linkedin.com/in/carlcahill"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a
+              class="footer__link"
+              data-magnetic
+              href="https://dribbble.com/carlcahill"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Dribbble"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12c6.615 0 12-5.373 12-12S18.615 0 12 0zm9.886 11.41c-2.575-.42-4.943-.444-7.103-.072a42.27 42.27 0 0 0-.767-1.68c2.31-1 4.165-2.358 5.548-4.082a9.864 9.864 0 0 1 2.322 5.834zM18.116 4.5c-1.219 1.612-2.917 2.876-5.084 3.792-1.172-2.157-2.471-3.928-3.896-5.312a9.948 9.948 0 0 1 8.98 1.52zM7.064 3.708A48.78 48.78 0 0 1 11.07 9.05c-3.222.857-6.81.97-10.752.317A9.984 9.984 0 0 1 7.064 3.708zM2.094 11.5l-.001-.022c4.499.847 8.483.704 11.926-.412.207.388.405.78.594 1.176-2.097.605-3.937 1.554-5.516 2.846-1.602 1.314-2.802 2.939-3.602 4.872-1.989-1.829-3.255-4.5-3.401-7.46zm5.018 8.642c.683-1.79 1.798-3.32 3.336-4.59 1.519-1.255 3.305-2.13 5.358-2.628.71 1.835 1.265 3.789 1.668 5.866-3.366 1.504-6.864 1.78-10.362 1.352zm12.226-2.347c-.348-1.92-.85-3.741-1.502-5.467 1.948-.366 4.124-.354 6.526.04-.55 2.247-1.755 4.246-3.428 5.756-.546-.115-1.07-.225-1.596-.329z" />
+              </svg>
+            </a>
+          </li>
+        </ul>
+
+        <p class="footer__copy">© 2026</p>
+      </div>
+    </footer>
+  </body>
+</html>
