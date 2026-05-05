@@ -15,6 +15,7 @@
  *      lean toward the cursor when it's nearby.
  *   6. SALO watermark — purple spotlight clipped to the logo shape,
  *      follows the cursor inside `.salo-callout`.
+ *   7. Cookie consent banner — Google Consent Mode v2 + GA4 (see index.html).
  *
  * All effects respect `prefers-reduced-motion`.
  */
@@ -65,130 +66,6 @@
   }
 
   /* -------------------------------------------------------------
-   * 1a. Smooth-scroll inertia (Lenis-style)
-   *
-   * Each wheel/key input updates a target scroll position; every
-   * frame the real `window.scrollY` is lerped toward that target
-   * with a fixed damping factor. The result is buttery scroll
-   * where every input decelerates into place — sections feel
-   * like they ease and settle into the middle of the viewport
-   * rather than jumping to a stop.
-   *
-   * We mutate the actual `scrollY` (not a transform on a wrapper)
-   * so every other scroll-tied effect on the page (hero opacity,
-   * the phone scrub on each achievement, the reveal observers)
-   * just inherits the smoothness for free.
-   * ----------------------------------------------------------- */
-  if (!prefersReducedMotion) {
-    let targetY = window.scrollY;
-    let isAnimating = false;
-    // Lerp factor per frame. Lower = heavier/smoother feel, higher
-    // = snappier. 0.1 is roughly Lenis's default and feels close
-    // to lenis.dev.
-    const LERP = 0.1;
-    // Fraction of viewport per keyboard "page" or space press.
-    const PAGE_STEP = 0.9;
-    // Pixels per arrow-key tap.
-    const ARROW_STEP = 80;
-
-    const maxScroll = () =>
-      Math.max(
-        0,
-        document.documentElement.scrollHeight - window.innerHeight
-      );
-
-    const tick = () => {
-      const current = window.scrollY;
-      const delta = targetY - current;
-
-      // Snap-to-target once we're sub-pixel close — avoids endless
-      // tiny rAF ticks when the easing tail goes to zero.
-      if (Math.abs(delta) < 0.5) {
-        window.scrollTo(0, targetY);
-        isAnimating = false;
-        return;
-      }
-
-      window.scrollTo(0, current + delta * LERP);
-      requestAnimationFrame(tick);
-    };
-
-    const ensureTicking = () => {
-      if (!isAnimating) {
-        isAnimating = true;
-        requestAnimationFrame(tick);
-      }
-    };
-
-    const setTarget = (next) => {
-      targetY = Math.max(0, Math.min(maxScroll(), next));
-      ensureTicking();
-    };
-
-    window.addEventListener(
-      "wheel",
-      (e) => {
-        // Leave pinch-zoom alone (Ctrl + wheel).
-        if (e.ctrlKey) return;
-        e.preventDefault();
-        setTarget(targetY + e.deltaY);
-      },
-      { passive: false }
-    );
-
-    window.addEventListener("keydown", (e) => {
-      // Don't smooth-scroll while typing.
-      const t = e.target;
-      const tag = (t && t.tagName) || "";
-      if (tag === "INPUT" || tag === "TEXTAREA" || (t && t.isContentEditable)) {
-        return;
-      }
-
-      const viewportH = window.innerHeight;
-      switch (e.key) {
-        case "ArrowDown":
-          e.preventDefault();
-          setTarget(targetY + ARROW_STEP);
-          break;
-        case "ArrowUp":
-          e.preventDefault();
-          setTarget(targetY - ARROW_STEP);
-          break;
-        case "PageDown":
-        case " ":
-          e.preventDefault();
-          setTarget(targetY + viewportH * PAGE_STEP);
-          break;
-        case "PageUp":
-          e.preventDefault();
-          setTarget(targetY - viewportH * PAGE_STEP);
-          break;
-        case "Home":
-          e.preventDefault();
-          setTarget(0);
-          break;
-        case "End":
-          e.preventDefault();
-          setTarget(maxScroll());
-          break;
-      }
-    });
-
-    // Anchor link jumps and scrollbar drags bypass our wheel/key
-    // handlers, so sync the target whenever the page scrolls
-    // outside of our own tick to keep things in agreement.
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!isAnimating) {
-          targetY = window.scrollY;
-        }
-      },
-      { passive: true }
-    );
-  }
-
-  /* -------------------------------------------------------------
    * 1d. Brand showcase marquees
    *
    * Each `.device-strip__track` gets its children cloned once so
@@ -217,6 +94,24 @@
       track.parentElement.classList.add("is-marquee");
     }
   });
+
+  /* -------------------------------------------------------------
+   * Vimeo testimonial — let the page scroll through the embed until
+   * the user clicks. Embedded players often capture wheel/trackpad,
+   * which reads as a sticky frame or erratic scroll position.
+   * ----------------------------------------------------------- */
+  const testimonialFrame = document.querySelector(
+    ".testimonial-video-section__frame"
+  );
+  if (testimonialFrame) {
+    testimonialFrame.addEventListener(
+      "click",
+      () => {
+        testimonialFrame.classList.add("is-interactive");
+      },
+      { once: true }
+    );
+  }
 
   /* -------------------------------------------------------------
    * 1c. SALO watermark — sweeps right → left across the section
@@ -785,28 +680,109 @@
 
   if (prefersReducedMotion) {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
-    return;
-  }
-
-  if (!("IntersectionObserver" in window)) {
+  } else if (!("IntersectionObserver" in window)) {
     revealTargets.forEach((el) => el.classList.add("is-visible"));
-    return;
+  } else {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        });
+      },
+      {
+        // Trigger slightly before the element fully enters/leaves so
+        // the fade-up reads naturally. A symmetric inset on top and
+        // bottom keeps enter and exit timing balanced.
+        rootMargin: "-8% 0px -8% 0px",
+        threshold: 0,
+      }
+    );
+
+    revealTargets.forEach((el) => revealObserver.observe(el));
   }
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("is-visible", entry.isIntersecting);
-      });
-    },
-    {
-      // Trigger slightly before the element fully enters/leaves so
-      // the fade-up reads naturally. A symmetric inset on top and
-      // bottom keeps enter and exit timing balanced.
-      rootMargin: "-8% 0px -8% 0px",
-      threshold: 0,
-    }
-  );
+  /* -------------------------------------------------------------
+   * Cookie consent (Google Consent Mode v2)
+   *
+   * Default denied state & measurement ID are set in <head> before
+   * gtag loads. LocalStorage key must stay in sync: cc_cookie_consent.
+   * ----------------------------------------------------------- */
+  const CONSENT_STORAGE_KEY = "cc_cookie_consent";
 
-  revealTargets.forEach((el) => revealObserver.observe(el));
+  const consentGranted = () => ({
+    ad_storage: "granted",
+    ad_user_data: "granted",
+    ad_personalization: "granted",
+    analytics_storage: "granted",
+  });
+
+  const consentDenied = () => ({
+    ad_storage: "denied",
+    ad_user_data: "denied",
+    ad_personalization: "denied",
+    analytics_storage: "denied",
+  });
+
+  const applyGtagConsent = (payload) => {
+    if (typeof window.gtag === "function") {
+      window.gtag("consent", "update", payload);
+    }
+  };
+
+  const hideCookieBanner = (banner) => {
+    if (!banner) return;
+    banner.hidden = true;
+    banner.setAttribute("aria-hidden", "true");
+  };
+
+  const showCookieBanner = (banner, acceptBtn) => {
+    if (!banner) return;
+    banner.hidden = false;
+    banner.setAttribute("aria-hidden", "false");
+    acceptBtn && acceptBtn.focus();
+  };
+
+  const banner = document.getElementById("cookie-banner");
+  const acceptBtn = document.getElementById("cookie-accept");
+  const rejectBtn = document.getElementById("cookie-reject");
+
+  if (banner && acceptBtn && rejectBtn) {
+    let stored = null;
+    try {
+      stored = localStorage.getItem(CONSENT_STORAGE_KEY);
+    } catch (e) {
+      /* private mode / security */
+    }
+
+    if (stored === null) {
+      showCookieBanner(banner, acceptBtn);
+    }
+
+    acceptBtn.addEventListener("click", () => {
+      try {
+        localStorage.setItem(CONSENT_STORAGE_KEY, "granted");
+      } catch (e) {}
+      applyGtagConsent(consentGranted());
+      hideCookieBanner(banner);
+    });
+
+    rejectBtn.addEventListener("click", () => {
+      try {
+        localStorage.setItem(CONSENT_STORAGE_KEY, "denied");
+      } catch (e) {}
+      applyGtagConsent(consentDenied());
+      hideCookieBanner(banner);
+    });
+
+    document.querySelectorAll(".cookie-prefs-trigger").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        try {
+          localStorage.removeItem(CONSENT_STORAGE_KEY);
+        } catch (err) {}
+        applyGtagConsent(consentDenied());
+        showCookieBanner(banner, acceptBtn);
+      });
+    });
+  }
 })();

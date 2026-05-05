@@ -1,13 +1,120 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!--
+      Social previews (Open Graph, Twitter) need an absolute URL. If your
+      live site is not https://carlcahill.com replace it everywhere below
+      (canonical, og:*, twitter:*, JSON-LD) so shared links show the hero image.
+    -->
+    <link rel="canonical" href="https://carlcahill.com/" />
+
     <title>Carl Cahill — Fractional Creative Director &amp; fellow agency founder</title>
     <meta
       name="description"
       content="Carl Cahill — Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking."
     />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Carl Cahill" />
+    <meta name="theme-color" content="#060606" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://carlcahill.com/" />
+    <meta property="og:site_name" content="Carl Cahill" />
+    <meta property="og:locale" content="en_GB" />
+    <meta
+      property="og:title"
+      content="Carl Cahill — Fractional Creative Director &amp; fellow agency founder"
+    />
+    <meta
+      property="og:description"
+      content="Carl Cahill — Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking."
+    />
+    <meta
+      property="og:image"
+      content="https://carlcahill.com/assets/images/hero-portrait.png"
+    />
+    <meta property="og:image:width" content="1920" />
+    <meta property="og:image:height" content="1080" />
+    <meta property="og:image:alt" content="Carl Cahill" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Carl Cahill — Fractional Creative Director &amp; fellow agency founder"
+    />
+    <meta
+      name="twitter:description"
+      content="Carl Cahill — Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking."
+    />
+    <meta
+      name="twitter:image"
+      content="https://carlcahill.com/assets/images/hero-portrait.png"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://carlcahill.com/#website",
+            "url": "https://carlcahill.com/",
+            "name": "Carl Cahill",
+            "description": "Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking.",
+            "inLanguage": "en-GB"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://carlcahill.com/#person",
+            "name": "Carl Cahill",
+            "url": "https://carlcahill.com/",
+            "image": "https://carlcahill.com/assets/images/hero-portrait.png",
+            "jobTitle": "Fractional Creative Director",
+            "sameAs": [
+              "https://www.linkedin.com/in/carlcahill",
+              "https://dribbble.com/carlcahill"
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+
+    <!--
+      Google tag (gtag.js) + Consent Mode v2 defaults (denied until the
+      visitor accepts analytics in the banner). Key: cc_cookie_consent.
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        wait_for_update: 500,
+      });
+      try {
+        if (localStorage.getItem("cc_cookie_consent") === "granted") {
+          gtag("consent", "update", {
+            ad_storage: "granted",
+            ad_user_data: "granted",
+            ad_personalization: "granted",
+            analytics_storage: "granted",
+          });
+        }
+      } catch (e) {}
+      gtag("js", new Date());
+      gtag("config", "G-D9W916JGD4");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D9W916JGD4"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,6 +122,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <script src="script.js" defer></script>
   </head>
   <body>
@@ -33,6 +141,30 @@
         src="assets/images/hero-portrait.png"
         alt=""
       />
+    </div>
+
+    <div class="site-header-actions">
+      <a
+        class="header-action header-linkedin"
+        href="https://www.linkedin.com/in/carlcahill"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false">
+          <path
+            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"
+          />
+        </svg>
+      </a>
+      <a
+        class="header-action book-call"
+        href="https://cal.com/carlcahill/chat"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Book a call
+      </a>
     </div>
 
     <main>
@@ -225,7 +357,7 @@
             </div>
             <div class="achievement__phone" aria-hidden="true">
               <div class="phone phone--tilted">
-                <img class="phone__screen" src="assets/images/phone-screen-rotated.png" alt="" />
+                <img class="phone__screen" src="assets/images/brand-4.png" alt="" />
               </div>
             </div>
           </div>
@@ -242,7 +374,7 @@
             </div>
             <div class="achievement__phone" aria-hidden="true">
               <div class="phone phone--tilted">
-                <img class="phone__screen" src="assets/images/phone-screen-rotated.png" alt="" />
+                <img class="phone__screen" src="assets/images/brand-7.png" alt="" />
               </div>
             </div>
           </div>
@@ -412,6 +544,30 @@
           </div>
         </div>
       </section>
+
+      <section class="section privacy-section" id="privacy" aria-label="Privacy and cookies">
+        <div class="container privacy-section__inner">
+          <h2 class="privacy-section__title">Privacy &amp; cookies</h2>
+          <div class="privacy-section__body">
+            <p>
+              This site uses essential functionality only until you choose otherwise. If you accept
+              analytics, Google Analytics (GA4) may set cookies and process usage data as described
+              in
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Google’s privacy policy</a
+              >. You can change your choice anytime via
+              <a href="#" class="cookie-prefs-trigger">Cookie preferences</a> in the footer.
+            </p>
+            <p>
+              For formal GDPR / UK GDPR requests, contact through the details you publish for your
+              business.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- ============================================================
@@ -452,8 +608,43 @@
           </li>
         </ul>
 
-        <p class="footer__copy">© 2026</p>
+        <div class="footer__meta">
+          <p class="footer__copy">© 2026</p>
+          <p class="footer__legal">
+            <a class="footer__legal-link" href="#privacy">Privacy &amp; cookies</a>
+            ·
+            <a class="footer__legal-link cookie-prefs-trigger" href="#">Cookie preferences</a>
+          </p>
+        </div>
       </div>
     </footer>
+
+    <div
+      class="cookie-banner"
+      id="cookie-banner"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cookie-banner-title"
+      aria-describedby="cookie-banner-desc"
+      hidden
+    >
+      <div class="cookie-banner__inner">
+        <h2 id="cookie-banner-title" class="cookie-banner__title">Cookies on this site</h2>
+        <p id="cookie-banner-desc" class="cookie-banner__text">
+          We use Google Analytics to understand how visitors use this site. It only runs if you
+          accept. See our
+          <a class="cookie-banner__inline-link" href="#privacy">privacy &amp; cookies notice</a> for
+          details.
+        </p>
+        <div class="cookie-banner__actions">
+          <button type="button" class="cookie-banner__btn cookie-banner__btn--primary" id="cookie-accept">
+            Accept analytics
+          </button>
+          <button type="button" class="cookie-banner__btn cookie-banner__btn--secondary" id="cookie-reject">
+            Necessary only
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

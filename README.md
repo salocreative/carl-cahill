@@ -34,6 +34,26 @@ python3 -m http.server 8000
 
 Then visit <http://localhost:8000>.
 
+## Social previews and SEO
+
+`index.html` includes canonical, Open Graph, Twitter Card, and JSON-LD
+metadata. **Update every `https://carlcahill.com` URL** in the `<head>` (and
+in the JSON-LD script) to match your real domain so link previews load
+the hero image (`assets/images/hero-portrait.png`) correctly on LinkedIn,
+iMessage, Slack, etc. Relative `og:image` paths are not reliable across platforms.
+
+After deploying, validate with your host’s link inspector or
+[Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+(if you use Meta tools).
+
+## Analytics & cookies
+
+The site loads Google Analytics 4 only after Consent Mode is satisfied.
+The banner stores `cc_cookie_consent` (`granted` / `denied`) in `localStorage`
+and syncs with `gtag('consent', ...)`. Expand the **Privacy & cookies**
+section on the page and add your formal privacy notice and contact details
+for GDPR requests before going live.
+
 ## Editing
 
 - Copy and section content lives in `index.html`.
