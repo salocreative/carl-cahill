@@ -4,6 +4,9 @@
  *   1. Fade the fixed hero portrait out as the user scrolls past the
  *      banner. Driven by the `--hero-opacity` custom property so the
  *      transition stays on the GPU.
+ *   1b. Full-viewport video under the hero: after the banner, it
+ *      fades in and scrubs `currentTime` across the rest of the page
+ *      scroll range.
  *   2. Reveal each `.reveal` element on first intersection (fade up).
  *   3. Split each `.title-reveal` into per-character spans and ease
  *      them in with a blur on the same first intersection.
@@ -63,6 +66,102 @@
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll, { passive: true });
     updateHeroOpacity();
+  }
+
+  /* -------------------------------------------------------------
+   * 1b. Scroll-scrubbed background video (after banner)
+   * ----------------------------------------------------------- */
+  const scrollVideoBg = document.querySelector(".scroll-video-bg");
+  const scrollVideo = document.querySelector(".scroll-video-bg__media");
+  const bannerForVideo = document.querySelector(".banner");
+
+  if (scrollVideoBg && scrollVideo && bannerForVideo) {
+    /* ~1/60s — tight enough to feel continuous without spamming
+       redundant seeks when the target barely moves. */
+    const SEEK_EPS = 1 / 60;
+
+    let rafId = 0;
+
+    const syncScrollVideoFromScrollPosition = () => {
+      const bannerBottom =
+        bannerForVideo.offsetTop + bannerForVideo.offsetHeight;
+      const y = window.scrollY;
+      scrollVideoBg.classList.toggle("is-active", y >= bannerBottom - 2);
+
+      if (
+        prefersReducedMotion ||
+        !Number.isFinite(scrollVideo.duration) ||
+        scrollVideo.duration <= 0
+      ) {
+        return;
+      }
+
+      const maxScroll = Math.max(
+        1,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+      const range = Math.max(1, maxScroll - bannerBottom);
+      let t = (y - bannerBottom) / range;
+      t = Math.min(Math.max(t, 0), 1);
+      const targetTime = t * scrollVideo.duration;
+      if (Math.abs(scrollVideo.currentTime - targetTime) > SEEK_EPS) {
+        scrollVideo.currentTime = targetTime;
+      }
+    };
+
+    const tick = () => {
+      rafId = 0;
+      if (
+        document.visibilityState !== "visible" ||
+        prefersReducedMotion ||
+        !Number.isFinite(scrollVideo.duration) ||
+        scrollVideo.duration <= 0
+      ) {
+        return;
+      }
+      syncScrollVideoFromScrollPosition();
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    const startRafLoop = () => {
+      if (prefersReducedMotion) return;
+      if (!Number.isFinite(scrollVideo.duration) || scrollVideo.duration <= 0) {
+        return;
+      }
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    const stopRafLoop = () => {
+      window.cancelAnimationFrame(rafId);
+      rafId = 0;
+    };
+
+    const bump = () => {
+      syncScrollVideoFromScrollPosition();
+    };
+
+    scrollVideo.addEventListener("loadedmetadata", () => {
+      bump();
+      startRafLoop();
+    });
+
+    window.addEventListener("scroll", bump, { passive: true });
+    window.addEventListener("resize", bump, { passive: true });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") {
+        stopRafLoop();
+      } else {
+        bump();
+        startRafLoop();
+      }
+    });
+
+    if (scrollVideo.readyState >= 1) {
+      bump();
+    }
+    startRafLoop();
   }
 
   /* -------------------------------------------------------------

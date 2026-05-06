@@ -133,6 +133,19 @@
          with the rest of the dotted background. -->
     <canvas class="dot-cursor" aria-hidden="true"></canvas>
 
+    <!-- Full-viewport video below the hero. Hidden during the banner;
+         opacity follows scroll after that. Current time scrubs with
+         page scroll (see script.js). -->
+    <div class="scroll-video-bg" aria-hidden="true">
+      <video
+        class="scroll-video-bg__media"
+        src="assets/video/background.mp4"
+        muted
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
+
     <!-- Fixed hero background. Lives behind everything, fades out as
          the user scrolls past the banner. -->
     <div class="hero-bg" aria-hidden="true">
