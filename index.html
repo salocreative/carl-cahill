@@ -64,7 +64,19 @@
             "url": "https://carlcahill.com/",
             "name": "Carl Cahill",
             "description": "Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking.",
-            "inLanguage": "en-GB"
+            "inLanguage": "en-GB",
+            "publisher": { "@id": "https://carlcahill.com/#person" }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://carlcahill.com/#webpage",
+            "url": "https://carlcahill.com/",
+            "name": "Carl Cahill — Fractional Creative Director & fellow agency founder",
+            "description": "Carl Cahill — Fractional Creative Director and fellow agency founder helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking.",
+            "inLanguage": "en-GB",
+            "isPartOf": { "@id": "https://carlcahill.com/#website" },
+            "about": { "@id": "https://carlcahill.com/#person" },
+            "primaryImageOfPage": "https://carlcahill.com/assets/images/hero-portrait.png"
           },
           {
             "@type": "Person",
@@ -73,10 +85,94 @@
             "url": "https://carlcahill.com/",
             "image": "https://carlcahill.com/assets/images/hero-portrait.png",
             "jobTitle": "Fractional Creative Director",
+            "description": "Fractional Creative Director and agency founder with 15+ years in the creative industry, helping brands and agencies optimise their design process and output without sacrificing exceptional creative thinking.",
+            "knowsAbout": [
+              "Creative Direction",
+              "Brand Design",
+              "Digital Product Design",
+              "Design Systems",
+              "Digital Commerce",
+              "Design Process Optimisation",
+              "Creative Team Leadership",
+              "UX/UI Design"
+            ],
+            "knowsLanguage": "en-GB",
+            "worksFor": { "@id": "https://salo.uk/#organization" },
+            "hasOccupation": {
+              "@type": "Occupation",
+              "name": "Fractional Creative Director",
+              "occupationLocation": [
+                { "@type": "Country", "name": "United Kingdom" },
+                { "@type": "Country", "name": "United States" }
+              ]
+            },
+            "makesOffer": { "@id": "https://carlcahill.com/#service" },
+            "award": [
+              "Creative of the Year — Wirehive 100",
+              "DADI Award Winner — The Drum",
+              "No.1 Design Census — The Drum",
+              "BIMA 100"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "Booking",
+              "url": "https://cal.com/carlcahill/chat"
+            },
             "sameAs": [
               "https://www.linkedin.com/in/carlcahill",
               "https://dribbble.com/carlcahill"
             ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://salo.uk/#organization",
+            "name": "Salo Creative",
+            "url": "https://salo.uk/",
+            "description": "Design agency founded by Carl Cahill.",
+            "founder": { "@id": "https://carlcahill.com/#person" }
+          },
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://carlcahill.com/#practice",
+            "name": "Carl Cahill — Fractional Creative Direction",
+            "url": "https://carlcahill.com/",
+            "image": "https://carlcahill.com/assets/images/hero-portrait.png",
+            "description": "Fractional creative direction for brands and agencies looking to scale their creative output and optimise their design process.",
+            "founder": { "@id": "https://carlcahill.com/#person" },
+            "areaServed": [
+              { "@type": "Country", "name": "United Kingdom" },
+              { "@type": "Country", "name": "United States" }
+            ],
+            "knowsAbout": [
+              "Creative Direction",
+              "Brand Design",
+              "Digital Product Design",
+              "Digital Commerce",
+              "Design Process Optimisation"
+            ],
+            "makesOffer": { "@id": "https://carlcahill.com/#service" }
+          },
+          {
+            "@type": "Service",
+            "@id": "https://carlcahill.com/#service",
+            "serviceType": "Fractional Creative Direction",
+            "name": "Fractional Creative Direction",
+            "description": "Fractional Creative Director support helping brands and agencies scale their creative output, lead design teams, and optimise their design process without sacrificing exceptional creative thinking.",
+            "provider": { "@id": "https://carlcahill.com/#person" },
+            "areaServed": [
+              { "@type": "Country", "name": "United Kingdom" },
+              { "@type": "Country", "name": "United States" }
+            ],
+            "audience": {
+              "@type": "Audience",
+              "audienceType": "Brands and agencies"
+            },
+            "url": "https://carlcahill.com/",
+            "potentialAction": {
+              "@type": "ReserveAction",
+              "name": "Book a call",
+              "target": "https://cal.com/carlcahill/chat"
+            }
           }
         ]
       }
